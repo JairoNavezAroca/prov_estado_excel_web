@@ -4,8 +4,10 @@ import Vue from 'vue'
 export default {
 	//ruta_api: 'http://localhost:8000',
 	//ruta_subir_archivos: 'http://localhost:8000/importar-excel',
-	ruta_api: 'http://localhost:30001',
-	ruta_subir_archivos: 'http://localhost:30001/importar-excel',
+	//ruta_api: 'http://localhost:30001',
+	//ruta_subir_archivos: 'http://localhost:30001/importar-excel',
+	ruta_api: 'http://192.168.56.103:2001',
+	ruta_subir_archivos: 'http://192.168.56.103:2001/importar-excel',
 	//ruta_api: 'http://demo1.zcsystemsperu.com',
 	//ruta_subir_archivos: 'http://demo1.zcsystemsperu.com/importar-excel',
 	ESTADO_PENDIENTE: 'PENDIENTE',
