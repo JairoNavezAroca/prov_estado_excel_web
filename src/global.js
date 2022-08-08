@@ -1,15 +1,16 @@
 import Swal from 'sweetalert2'
 import Vue from 'vue'
+Vue.use(require('vue-cookies'))
 
 export default {
-	//ruta_api: 'http://localhost:8000',
-	//ruta_subir_archivos: 'http://localhost:8000/importar-excel',
+	ruta_api: 'http://localhost:8000',
+	ruta_subir_archivos: 'http://localhost:8000/importar-excel',
 	//ruta_api: 'http://localhost:30001',
 	//ruta_subir_archivos: 'http://localhost:30001/importar-excel',
-	ruta_api: 'http://192.168.56.103:2001',
-	ruta_subir_archivos: 'http://192.168.56.103:2001/importar-excel',
-	//ruta_api: 'http://demo1.zcsystemsperu.com',
-	//ruta_subir_archivos: 'http://demo1.zcsystemsperu.com/importar-excel',
+	//ruta_api: 'http://192.168.56.103:2001',
+	//ruta_subir_archivos: 'http://192.168.56.103:2001/importar-excel',
+	//ruta_api: 'http://consultaruc-api.zcsystemsperu.com/',
+	//ruta_subir_archivos: 'http://consultaruc-api.zcsystemsperu.com/importar-excel',
 	ESTADO_PENDIENTE: 'PENDIENTE',
 	ESTADO_EN_REGISTRO: 'EN REGISTRO',
 	ESTADO_REGISTRADO: 'REGISTRADO',
@@ -62,6 +63,11 @@ export default {
 		return this._axios('patch', ruta, parametros, funcion, funcion2)
 	},
 	_axios: function (metodo, ruta, parametros, funcion, funcion2) {
+		if ($cookies.isKey('jwt')) {
+			if ($cookies.get('jwt') != null && $cookies.get('jwt') != undefined) {
+				Vue.axios.defaults.headers.common['Authorization'] = 'Bearer ' + $cookies.get('jwt');
+			}
+		}
 		return Vue.axios({
 			method: metodo,
 			url: this.ruta_api + ruta,

@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import FileAgent from "../components/Extras/FileAgent";
-import global from "../global";
+import FileAgent from "@/components/Extras/FileAgent";
+import global from "@/global";
 export default {
 	components: {
 		FileAgent,

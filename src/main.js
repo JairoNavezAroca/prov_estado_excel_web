@@ -30,6 +30,11 @@ import 'vue-toastr-2/dist/vue-toastr-2.min.css'
 window.toastr = require('toastr')
 Vue.use(VueToastr2)
 
+// Vue Cookies
+// https://www.npmjs.com/package/vue-cookies
+Vue.use(require('vue-cookies'))
+$cookies.config('1d')
+
 new Vue({
 	router,
 	store,
