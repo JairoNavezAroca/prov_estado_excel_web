@@ -35,6 +35,10 @@ Vue.use(VueToastr2)
 Vue.use(require('vue-cookies'))
 $cookies.config('1d')
 
+// http://vue-js-toggle-button.yev.io/
+import ToggleButton from 'vue-js-toggle-button'
+Vue.use(ToggleButton)
+
 new Vue({
 	router,
 	store,

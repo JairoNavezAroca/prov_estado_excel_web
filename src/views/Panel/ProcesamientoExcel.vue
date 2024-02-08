@@ -32,6 +32,9 @@
 					</button>
 					<br />
 				</div>
+				<div v-if="mensajeWarning != null && mensajeWarning != ''" class="alert alert-warning" role="alert">
+					{{ mensajeWarning }}
+				</div>
 				<div class="d-flex justify-content-evenly">
 					<button
 						v-if="estadoProcesando == false && cantidadFallidos != 0"
@@ -124,6 +127,7 @@ export default {
 			estadoProcesando: false,
 			listaIdIntentando: [],
 			cantidadFallidos: 0,
+			mensajeWarning: '',
 		};
 	},
 	methods: {
@@ -131,6 +135,7 @@ export default {
 			"obtenerCargado",
 			"procesarRuc",
 			"exportarAExcel",
+			"actualizarCargadoProveedores",
 		]),
 		cargarDatos: async function () {
 			var listado = await this.obtenerCargado(this.tokenCargaProveedores);
@@ -174,6 +179,7 @@ export default {
 				);
 				if (listaProcesar.length != 0) {
 					var listaPromesas = [];
+					var that = this;
 					listaProcesar.forEach((item) => {
 						this.listaIdIntentando.push(item.idProveedor);
 						var peticion = this.procesarRuc({
@@ -183,6 +189,11 @@ export default {
 								this.$toastr.error(msj, "Error", {
 									closeDuration: 50,
 								}),
+						});
+						peticion.then((x) => {
+							if (x.warning == true){
+								that.mensajeWarning = x.mensaje;
+							}
 						});
 						listaPromesas.push(peticion);
 					});
@@ -237,6 +248,11 @@ export default {
 		this.ESTADO_REGISTRADO = global.ESTADO_REGISTRADO;
 		if (this.$route.params.token) {
 			this.tokenCargaProveedores = this.$route.params.token;
+			if (localStorage.key('flagBusquedaCompleta')) {
+				const flagBusquedaCompleta = localStorage.getItem('flagBusquedaCompleta');
+				await this.actualizarCargadoProveedores({ token: this.tokenCargaProveedores, flagBusquedaCompleta });
+				localStorage.removeItem('flagBusquedaCompleta');
+			}
 			await this.cargarDatos();
 			//this.enviarPeticiones(false);
 			this.gestionarEnviarPeticiones(false);

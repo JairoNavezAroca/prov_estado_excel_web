@@ -9,6 +9,17 @@
 				<br />
 				<h4>Por favor, ingrese su archivo excel</h4>
 				<FileAgent @archivosubido="archivoSubido" />
+				<br>
+				<toggle-button
+					:value="flagBusquedaCompleta"
+					:sync="true"
+					@change="setFlagBusquedaCompleta"
+					:labels="{checked: 'Búsqueda completa', unchecked: 'Búsqueda básica'}"
+					:width="350"
+					:height="30"
+					:font-size="20"/>
+				<br>
+				<br>
 				<button
 					v-if="datos != null"
 					type="button"
@@ -27,6 +38,7 @@
 <script>
 import FileAgent from "@/components/Extras/FileAgent";
 import global from "@/global";
+import _login from '../../store/_login'
 export default {
 	components: {
 		FileAgent,
@@ -36,6 +48,8 @@ export default {
 			bloquear_boton: false,
 			datos: null,
 			token: "",
+			flagBusquedaCompleta: false,
+			usuario: {},
 		};
 	},
 	computed: {},
@@ -56,9 +70,28 @@ export default {
 			}
 		},
 		goProcesar: function () {
+			localStorage.setItem('flagBusquedaCompleta', this.flagBusquedaCompleta);
 			location.href = "/procesar-excel/" + this.token;
 		},
+		setFlagBusquedaCompleta: function(x){
+			console.log(x.value);
+			console.log(this.usuario.flagPuedeHacerBusquedaCompleta);
+			if (x.value && this.usuario.flagPuedeHacerBusquedaCompleta != true) {
+				global._mensaje_advertencia("Usted no puede hacer búsquedas completas, por favor contacte con el administrador del sistema");
+				//this.setFlagBusquedaCompleta();
+				this.flagBusquedaCompleta = false;
+				return;
+			}
+			else {
+				this.flagBusquedaCompleta = x.value;
+			}
+		}
 	},
-	created() {},
+	created() {
+		this.usuario = _login.getters.getUsuario();
+		if (this.usuario.flagPuedeHacerBusquedaCompleta == true){
+			this.flagBusquedaCompleta = true;
+		}
+	},
 };
 </script>
