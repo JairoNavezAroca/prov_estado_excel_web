@@ -35,6 +35,9 @@
 				<div v-if="mensajeWarning != null && mensajeWarning != ''" class="alert alert-warning" role="alert">
 					{{ mensajeWarning }}
 				</div>
+				<div v-if="mensajeError != null && mensajeError != ''" class="alert alert-danger" role="alert">
+					{{ mensajeError }}
+				</div>
 				<div class="d-flex justify-content-evenly">
 					<button
 						v-if="estadoProcesando == false && cantidadFallidos != 0"
@@ -128,6 +131,7 @@ export default {
 			listaIdIntentando: [],
 			cantidadFallidos: 0,
 			mensajeWarning: '',
+			mensajeError: '',
 		};
 	},
 	methods: {
@@ -185,10 +189,12 @@ export default {
 						var peticion = this.procesarRuc({
 							token: item.token,
 							flagFallidos: flagFallidos,
-							funcion_error: (msj) =>
-								this.$toastr.error(msj, "Error", {
-									closeDuration: 50,
-								}),
+							funcion_error: (msj) =>{
+								that.mensajeError = msj;
+								that.$toastr.error(msj, "Error", {
+									closeDuration: 10,
+								});
+							}
 						});
 						peticion.then((x) => {
 							if (x.warning == true){
