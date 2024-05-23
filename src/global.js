@@ -3,18 +3,19 @@ import Vue from 'vue'
 Vue.use(require('vue-cookies'))
 
 export default {
-	ruta_api: 'http://localhost:8000',
-	ruta_subir_archivos: 'http://localhost:8000/importar-excel',
+	//ruta_api: 'http://localhost:8000',
+	//ruta_subir_archivos: 'http://localhost:8000/importar-excel',
 	//ruta_api: 'http://localhost:30001',
 	//ruta_subir_archivos: 'http://localhost:30001/importar-excel',
 	//ruta_api: 'http://192.168.56.103:2001',
 	//ruta_subir_archivos: 'http://192.168.56.103:2001/importar-excel',
-	//ruta_api: 'http://consultaruc-api.zcsystemsperu.com/',
-	//ruta_subir_archivos: 'http://consultaruc-api.zcsystemsperu.com/importar-excel',
+	ruta_api: 'http://consultaruc-api.zcsystemsperu.com/',
+	ruta_subir_archivos: 'http://consultaruc-api.zcsystemsperu.com/importar-excel',
 	ESTADO_PENDIENTE: 'PENDIENTE',
 	ESTADO_EN_REGISTRO: 'EN REGISTRO',
 	ESTADO_REGISTRADO: 'REGISTRADO',
 	ESTADO_FALLIDO: 'FALLIDO',
+	CANTIDAD_MAXIMA_SELECCION_BUSQUEDA_MANUAL: 100,
 	_swal_pregunta: function (text, funcion) {
 		const swalWithBootstrapButtons = Swal.mixin({
 			customClass: {
@@ -116,5 +117,11 @@ export default {
 				textArea.remove();
 			});
 		}
+	},
+	_json_to_query_string: function (json) {
+		json = Object.keys(json).map(item => {
+			return item + '=' + json[item] || '';
+		});
+		return json.join("&");
 	},
 }

@@ -74,11 +74,8 @@ export default {
 			location.href = "/procesar-excel/" + this.token;
 		},
 		setFlagBusquedaCompleta: function(x){
-			console.log(x.value);
-			console.log(this.usuario.flagPuedeHacerBusquedaCompleta);
 			if (x.value && this.usuario.flagPuedeHacerBusquedaCompleta != true) {
 				global._mensaje_advertencia("Usted no puede hacer búsquedas completas, por favor contacte con el administrador del sistema");
-				//this.setFlagBusquedaCompleta();
 				this.flagBusquedaCompleta = false;
 				return;
 			}

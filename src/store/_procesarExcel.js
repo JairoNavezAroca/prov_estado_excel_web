@@ -23,7 +23,7 @@ export default {
 				token: data.token,
 				flagFallidos: data.flagFallidos,
 			};
-			await global._axios_post('/procesar-ruc', datos_enviar, (res) => {
+			await global._axios_post('/procesar-ruc', datos_enviar, (data, res) => {
 				respuesta = res;
 				if (respuesta.success == false){
 					data.funcion_error(respuesta.mensaje);

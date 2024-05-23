@@ -39,6 +39,15 @@
                                 Cambiar contraseña
                             </router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link
+                                class="nav-link active"
+                                aria-current="page"
+                                to="/busqueda-manual"
+                            >
+                                Busqueda manual
+                            </router-link>
+                        </li>
                     </ul>
                     <div class="d-flex">
                         <button

@@ -44,6 +44,11 @@ const routes = [
 				meta: { necesita_autenticacion: true },
 				component: () => import('../views/Autenticacion/CambiarContrasena.vue')
 			},
+			{
+				path: '/busqueda-manual',
+				meta: { necesita_autenticacion: true },
+				component: () => import('../views/Panel/BusquedaManual.vue')
+			},
 		]
 	},
 ]
